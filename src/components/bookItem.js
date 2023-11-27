@@ -1,5 +1,10 @@
+
 import Card from 'react-bootstrap/Card';
-import { Link } from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
+import {Link} from 'react-router-dom'
+import axios from 'axios';
+
+
 function BookItem(props) {
 
     return (
@@ -10,12 +15,25 @@ function BookItem(props) {
                     <blockquote className="blockquote mb-0">
                         <img src={props.myBook.cover}></img>
                         <footer>
-                            {props.myBook.author 
+                            {props.myBook.author
+                           
                             }
                         </footer>
                     </blockquote>
                 </Card.Body>
-                <Link to={'/edit/'+props.myBook._id} className='btn btn-primary'>Edit</Link>
+                 <Link to={"/edit/"+ props.myBook._id} className='btn btn-primary'> Edit </Link> 
+                 <br></br>
+
+                <Button onClick={(e) => {
+                    e.preventDefault()
+                    axios.delete('http://localhost:4000/api/book/' + props.myBook._id)
+                    .then(()=>{
+                        props.reload();
+                    })
+                    .catch();
+                    }} className='btn-danger'> Delete </Button>
+                                <br></br>
+
             </Card>
             {/* <h3>{props.myBook.title}</h3>
             <img src={props.myBook.thumbnailUrl}></img>
